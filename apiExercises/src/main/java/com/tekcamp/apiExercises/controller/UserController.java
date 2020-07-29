@@ -8,7 +8,6 @@ import com.tekcamp.apiExercises.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -28,9 +27,15 @@ public class UserController {
         return returnValue;
     }
 
-    @GetMapping(path = "/{userId}")
-    public User getUser(@PathVariable String userId) {
-        User returnValue = userService.getUser(userId);
+    @GetMapping(path = "/userId={userId}")
+    public User getUserByUserId(@PathVariable String userId) {
+        User returnValue = userService.getUserByUserId(userId);
+        return returnValue;
+    }
+
+    @GetMapping(path = "/email={email}")
+    public User getUserByEmail(@PathVariable String email) {
+        User returnValue = userService.getUserByEmail(email);
         return returnValue;
     }
 
