@@ -5,7 +5,6 @@ import com.tekcamp.apiExercises.repository.UserRepository;
 import com.tekcamp.apiExercises.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,5 +27,11 @@ public class UserServiceImplementation implements UserService {
     public void createUser(User user) {
 //        if (user.getFirstName() == null) {} add error handling later
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUser(String userId) {
+        User returnValue = userRepository.findByUserId(userId);
+        return returnValue;
     }
 }
