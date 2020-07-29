@@ -9,7 +9,6 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(nullable = false)
 	private String userId;
 
 	@Column(nullable = false)
@@ -21,9 +20,6 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	private String encryptedPassword;
-	private String emailVerificationToken;
-	private Boolean emailVerificationStatus;
 
 	public User() {
 	}
@@ -34,9 +30,6 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.encryptedPassword = encryptedPassword;
-		this.emailVerificationToken = emailVerificationToken;
-		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
 	public Long getId() {
@@ -73,29 +66,5 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
-
-	public String getEmailVerificationToken() {
-		return emailVerificationToken;
-	}
-
-	public void setEmailVerificationToken(String emailVerificationToken) {
-		this.emailVerificationToken = emailVerificationToken;
-	}
-
-	public Boolean getEmailVerificationStatus() {
-		return emailVerificationStatus;
-	}
-
-	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
-		this.emailVerificationStatus = emailVerificationStatus;
 	}
 }

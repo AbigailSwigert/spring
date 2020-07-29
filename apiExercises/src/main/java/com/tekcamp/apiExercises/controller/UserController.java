@@ -1,9 +1,14 @@
 package com.tekcamp.apiExercises.controller;
 
 import com.tekcamp.apiExercises.model.User;
+import com.tekcamp.apiExercises.model.request.UserRequest;
+import com.tekcamp.apiExercises.model.response.UserResponse;
 import com.tekcamp.apiExercises.service.UserService;
+import com.tekcamp.apiExercises.shared.dto.UserDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -15,6 +20,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
 
     @GetMapping
     public List<User> getUsers() {
@@ -29,8 +35,15 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
+    public UserResponse createUser(@RequestBody UserRequest userRequest) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userRequest, userDto);
+
+        UserDto createdUser = userService.createUser(userDto);
+
+        UserResponse returnValue = new UserResponse();
+        BeanUtils.copyProperties(createdUser, returnValue);
+        return returnValue;
     }
 
     @PutMapping
