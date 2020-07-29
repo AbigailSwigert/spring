@@ -53,7 +53,15 @@ Go to [mvnrepository.com](https://mvnrepository.com/) to add dependencies you ma
   - After doing a "PUT" on a user, "GET" the user to see if the information has been successfully updated.
   - After doing a "DELETE" on a user, "GET" the list of users to see if that particular user has been removed.  
 
-- As is the case with any Java Application, be sure to follow good Object Oriented Design (OOD) Principles and Patterns 
+- As is the case with any Java Application, be sure to follow good Object Oriented Design (OOD) Principles and Patterns  
+
+  
+  ### Part 2
+  Edit or add to your code from Part 1 to implement the following: </p>
+  - Add Pagination to your functionality to retrieve all records. (Hint: you can set the page limit low so you don't have to input too many records).
+  - Add/Edit your entities to include a POJO for Requests, and a POJO for Responses, including only relevant and safe fields. Responses should include an HTTP Response field.
+  - Add a POJO for a Data Transfer Object and use it in the appropriate classes and methods to transfer data between other classes (Hint: use BeanUtils.copyProperties()).
+  - Add Exception handling, including custom Exceptions when necessary. Make sure to return them to the user if they are thrown.
   
 ********************************
 ## Git Instructions
