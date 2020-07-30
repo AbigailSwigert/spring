@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping(path = "/email={email}")
     public User getUserByEmail(@PathVariable String email) {
-        User returnValue = userService.getUserByEmail(email);
+        User returnValue = userService.getUserByEmail(email.toLowerCase());
         return returnValue;
     }
 
