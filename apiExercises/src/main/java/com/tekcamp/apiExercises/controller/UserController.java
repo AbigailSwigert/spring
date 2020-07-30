@@ -6,7 +6,6 @@ import com.tekcamp.apiExercises.model.response.UserResponse;
 import com.tekcamp.apiExercises.service.UserService;
 import com.tekcamp.apiExercises.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class UserController {
 
         UserResponse returnValue = new UserResponse();
         BeanUtils.copyProperties(queriedUser, returnValue);
-        
+
         return returnValue;
     }
 
@@ -69,9 +68,17 @@ public class UserController {
         return returnValue;
     }
 
-    @PutMapping
-    public void updateUser() {
+    @PutMapping(path = "/updateFirstName")
+    public UserResponse updateUser(@RequestBody UserRequest userRequest) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userRequest, userDto);
 
+        UserDto updatedUser = userService.updateFirstName(userDto);
+
+        UserResponse returnValue = new UserResponse();
+        BeanUtils.copyProperties(updatedUser, returnValue);
+
+        return returnValue;
     }
 
     @DeleteMapping

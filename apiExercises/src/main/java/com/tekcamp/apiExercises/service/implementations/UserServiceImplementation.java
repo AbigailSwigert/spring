@@ -60,4 +60,14 @@ public class UserServiceImplementation implements UserService {
         if (returnValue == null) throw new UserServiceException(ErrorMessages.USER_EMAIL_DOES_NOT_EXIST.getErrorMessage());
         return returnValue;
     }
+
+    @Override
+    public UserDto updateFirstName(UserDto userDto) {
+        User foundUser = getUserByEmail(userDto.getEmail());
+        foundUser.setFirstName(userDto.getFirstName()); // isn't actually setting firstName for some reason, response is correct though
+
+        UserDto returnValue = new UserDto();
+        BeanUtils.copyProperties(foundUser, returnValue);
+        return returnValue;
+    }
 }
