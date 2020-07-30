@@ -1,11 +1,8 @@
 package com.tekcamp.apiExercises.service.implementations;
 
-import com.tekcamp.apiExercises.exceptions.AppExceptionHandler;
 import com.tekcamp.apiExercises.exceptions.UserServiceException;
 import com.tekcamp.apiExercises.model.User;
-import com.tekcamp.apiExercises.model.response.CustomExceptionResponse;
 import com.tekcamp.apiExercises.model.response.ErrorMessages;
-import com.tekcamp.apiExercises.model.response.UserResponse;
 import com.tekcamp.apiExercises.repository.UserRepository;
 import com.tekcamp.apiExercises.service.UserService;
 import com.tekcamp.apiExercises.shared.Utils;
