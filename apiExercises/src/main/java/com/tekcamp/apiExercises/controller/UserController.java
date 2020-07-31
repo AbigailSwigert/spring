@@ -93,9 +93,18 @@ public class UserController {
         return returnValue;
     }
 
-    @DeleteMapping
-    public void deleteUser() {
+    @DeleteMapping(path = "/deleteUser")
+    public void deleteUser(@RequestBody UserRequest userRequest) {
+        if (userRequest.getUserId() == null) throw new UserServiceException(ErrorMessages.MISSING_USERID.getErrorMessage());
+        if (userRequest.getPassword() == null) throw new UserServiceException(ErrorMessages.MISSING_USER_PASSWORD.getErrorMessage());
 
+        User foundUser = userService.getUserByUserId(userRequest.getUserId());
+
+        if(!userRequest.getPassword().equals(foundUser.getPassword())) throw new UserServiceException(ErrorMessages.PASSWORD_INCORRECT.getErrorMessage());
+
+        userRepository.delete(foundUser);
+
+        throw new UserServiceException(ErrorMessages.USER_DELETED.getErrorMessage());
     }
 
 }

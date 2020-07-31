@@ -10,7 +10,8 @@ public enum ErrorMessages {
     MISSING_USERID("Must input user ID to update user information"),
     MISSING_USER_PASSWORD("Must input user password to update user information"),
     PASSWORD_INCORRECT("User password entered is incorrect"),
-    NOTHING_TO_UPDATE("No updated user information has been entered");
+    NOTHING_TO_UPDATE("No updated user information has been entered"),
+    USER_DELETED("The user has been deleted");
 
     private String errorMessage;
 
