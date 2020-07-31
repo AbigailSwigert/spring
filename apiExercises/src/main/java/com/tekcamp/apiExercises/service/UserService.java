@@ -1,6 +1,7 @@
 package com.tekcamp.apiExercises.service;
 
 import com.tekcamp.apiExercises.model.User;
+import com.tekcamp.apiExercises.model.request.UserRequest;
 import com.tekcamp.apiExercises.shared.dto.UserDto;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    UserDto updateFirstName(UserDto userDto);
+    UserDto updateUser(UserRequest userRequest, UserDto userDto);
 }

@@ -1,8 +1,11 @@
 package com.tekcamp.apiExercises.controller;
 
+import com.tekcamp.apiExercises.exceptions.UserServiceException;
 import com.tekcamp.apiExercises.model.User;
 import com.tekcamp.apiExercises.model.request.UserRequest;
+import com.tekcamp.apiExercises.model.response.ErrorMessages;
 import com.tekcamp.apiExercises.model.response.UserResponse;
+import com.tekcamp.apiExercises.repository.UserRepository;
 import com.tekcamp.apiExercises.service.UserService;
 import com.tekcamp.apiExercises.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
@@ -16,9 +19,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
 
@@ -68,15 +73,22 @@ public class UserController {
         return returnValue;
     }
 
-    @PutMapping(path = "/updateFirstName")
+    @PutMapping(path = "/updateUser")
     public UserResponse updateUser(@RequestBody UserRequest userRequest) {
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userRequest, userDto);
+        if (userRequest.getUserId() == null) throw new UserServiceException(ErrorMessages.MISSING_USERID.getErrorMessage());
+        if (userRequest.getPassword() == null) throw new UserServiceException(ErrorMessages.MISSING_USER_PASSWORD.getErrorMessage());
+        User foundUser = userService.getUserByUserId(userRequest.getUserId());
 
-        UserDto updatedUser = userService.updateFirstName(userDto);
+        UserDto foundUserDto = new UserDto();
+        BeanUtils.copyProperties(foundUser, foundUserDto);
+
+        UserDto updatedUser = userService.updateUser(userRequest, foundUserDto);
+        BeanUtils.copyProperties(updatedUser, foundUser);
+
+        User storedUserDetails = userRepository.save(foundUser);
 
         UserResponse returnValue = new UserResponse();
-        BeanUtils.copyProperties(updatedUser, returnValue);
+        BeanUtils.copyProperties(storedUserDetails, returnValue);
 
         return returnValue;
     }

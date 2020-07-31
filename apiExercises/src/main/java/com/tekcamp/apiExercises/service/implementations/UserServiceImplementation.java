@@ -2,6 +2,7 @@ package com.tekcamp.apiExercises.service.implementations;
 
 import com.tekcamp.apiExercises.exceptions.UserServiceException;
 import com.tekcamp.apiExercises.model.User;
+import com.tekcamp.apiExercises.model.request.UserRequest;
 import com.tekcamp.apiExercises.model.response.ErrorMessages;
 import com.tekcamp.apiExercises.repository.UserRepository;
 import com.tekcamp.apiExercises.service.UserService;
@@ -33,7 +34,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        if (userDto.getFirstName() == null | userDto.getLastName() == null | userDto.getEmail() == null | userDto.getPassword() == null) throw new UserServiceException(ErrorMessages.REQUIRED_FIELD_MISSING.getErrorMessage());
+        if (userDto.getFirstName() == null || userDto.getLastName() == null || userDto.getEmail() == null || userDto.getPassword() == null) throw new UserServiceException(ErrorMessages.REQUIRED_FIELD_MISSING.getErrorMessage());
         if (userRepository.findByEmail(userDto.getEmail()) != null) throw new UserServiceException(ErrorMessages.EMAIL_ALREADY_IN_USE.getErrorMessage());
         User newUser = new User();
         BeanUtils.copyProperties(userDto, newUser);
@@ -62,12 +63,15 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDto updateFirstName(UserDto userDto) {
-        User foundUser = getUserByEmail(userDto.getEmail());
-        foundUser.setFirstName(userDto.getFirstName()); // isn't actually setting firstName for some reason, response is correct though
+    public UserDto updateUser(UserRequest userRequest, UserDto userDto) {
 
-        UserDto returnValue = new UserDto();
-        BeanUtils.copyProperties(foundUser, returnValue);
-        return returnValue;
+        if(!userRequest.getPassword().equals(userDto.getPassword())) throw new UserServiceException(ErrorMessages.PASSWORD_INCORRECT.getErrorMessage());
+        if(userRequest.getEmail() == null && userRequest.getFirstName() == null && userRequest.getLastName() == null) throw new UserServiceException(ErrorMessages.NOTHING_TO_UPDATE.getErrorMessage());
+
+        if (userRequest.getFirstName() != null) userDto.setFirstName(userRequest.getFirstName());
+        if (userRequest.getLastName() != null) userDto.setLastName(userRequest.getLastName());
+        if (userRequest.getEmail() != null) userDto.setEmail(userRequest.getEmail());
+
+        return userDto;
     }
 }

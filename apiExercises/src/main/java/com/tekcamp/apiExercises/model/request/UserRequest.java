@@ -2,10 +2,19 @@ package com.tekcamp.apiExercises.model.request;
 
 public class UserRequest {
 
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -40,6 +49,14 @@ public class UserRequest {
     }
 
     public UserRequest(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UserRequest(String userId, String firstName, String lastName, String email, String password) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
