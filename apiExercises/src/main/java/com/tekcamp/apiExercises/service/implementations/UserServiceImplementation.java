@@ -4,11 +4,14 @@ import com.tekcamp.apiExercises.exceptions.UserServiceException;
 import com.tekcamp.apiExercises.model.User;
 import com.tekcamp.apiExercises.model.request.UserRequest;
 import com.tekcamp.apiExercises.model.response.ErrorMessages;
+import com.tekcamp.apiExercises.model.response.UserResponse;
 import com.tekcamp.apiExercises.repository.UserRepository;
 import com.tekcamp.apiExercises.service.UserService;
 import com.tekcamp.apiExercises.shared.Utils;
 import com.tekcamp.apiExercises.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,5 +76,19 @@ public class UserServiceImplementation implements UserService {
         if (userRequest.getEmail() != null) userDto.setEmail(userRequest.getEmail());
 
         return userDto;
+    }
+
+    @Override
+    public List<User> getPaginatedUsers(int pageNum, int pageMax) {
+        if (getUsers() == null) throw new UserServiceException(ErrorMessages.EMPTY_USER_LIST.getErrorMessage());
+        if (pageNum < 1) throw new UserServiceException(ErrorMessages.PAGE_LESS_THAN_ONE.getErrorMessage());
+        pageNum--;
+        PageRequest paging = PageRequest.of(pageNum, pageMax);
+        Page<User> pagedResult = userRepository.findAll(paging);
+
+        List<User> returnValue = pagedResult.toList();
+        if (returnValue.size() < 1) throw new UserServiceException(ErrorMessages.PAGE_EMPTY.getErrorMessage());
+
+        return returnValue;
     }
 }

@@ -11,7 +11,9 @@ public enum ErrorMessages {
     MISSING_USER_PASSWORD("Must input user password to update user information"),
     PASSWORD_INCORRECT("User password entered is incorrect"),
     NOTHING_TO_UPDATE("No updated user information has been entered"),
-    USER_DELETED("The user has been deleted");
+    USER_DELETED("The user has been deleted"),
+    PAGE_LESS_THAN_ONE("The Page number cannot be less than 1"),
+    PAGE_EMPTY("There are no users to display on this page");
 
     private String errorMessage;
 

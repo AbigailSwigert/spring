@@ -28,7 +28,7 @@ public class UserController {
 
 
     @GetMapping
-    public ArrayList<UserResponse> getUsers() {
+    public List<UserResponse> getUsers() {
         List<User> userList = userService.getUsers();
 
         ArrayList<UserResponse> returnValue = new ArrayList<>();
@@ -38,6 +38,7 @@ public class UserController {
             BeanUtils.copyProperties(user,userResponse);
             returnValue.add(userResponse);
         };
+
         return returnValue;
     }
 
@@ -105,6 +106,20 @@ public class UserController {
         userRepository.delete(foundUser);
 
         throw new UserServiceException(ErrorMessages.USER_DELETED.getErrorMessage());
+    }
+
+    @GetMapping(path = "/page={pageNum}pageMax={pageMax}")
+    public List<UserResponse> getPaginatedUsers(@PathVariable int pageNum, @PathVariable int pageMax) {
+        List<User> paginatedUsers = userService.getPaginatedUsers(pageNum, pageMax);
+
+        ArrayList<UserResponse> returnValue = new ArrayList<>();
+
+        for (User user : paginatedUsers) {
+            UserResponse userResponse = new UserResponse();
+            BeanUtils.copyProperties(user,userResponse);
+            returnValue.add(userResponse);
+        };
+        return returnValue;
     }
 
 }
